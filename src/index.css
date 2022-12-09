@@ -1,3 +1,19 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+body {
+  background-color: whitesmoke;
+}
+
+:root {
+  --user-selected-bg: #1b68b3;
+  --user-hover-bg: #e8e8e8;
+  --input-border-color: #ececec;
+  --label-color: grey;
+  --cancel-btn-bg: #f7f7f7;
+  --cancel-btn-bg-hover: #dedede;
+  --grey: #808080;
+  --save-btn-bg: #1b68b3;
+  --save-btn-bg-hover: #185da1;
+}

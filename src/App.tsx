@@ -1,5 +1,5 @@
-function App() {
-  return <div className="font-semibold">Hello</div>;
-}
+import UserPanel from "./components";
 
-export default App;
+export default function App() {
+  return <UserPanel />;
+}
