@@ -1,5 +1,5 @@
 /* eslint-disable jsx-a11y/img-redundant-alt */
-import { User } from "../models";
+import { User } from "../../../models";
 
 interface UserCardProps {
   user: User;

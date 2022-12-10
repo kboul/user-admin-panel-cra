@@ -1,6 +1,6 @@
 import { rest } from "msw";
 
-import { baseUrl } from "../api/baseUrl";
+import { baseUrl } from "../api";
 import { users } from "./mockData";
 
 export const handlers = [
