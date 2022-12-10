@@ -1,8 +1,6 @@
 import { useId } from "react";
 
-import Button from "../../Button";
-import CenteredText from "../../CenteredText";
-import Input from "../../Input";
+import { Button, CenteredText, Input } from "../../../components";
 import { useGetUser } from "../../../hooks";
 import { useUserPanelContext } from "../userPanelContext";
 import { User } from "../../../models";
