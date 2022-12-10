@@ -17,20 +17,15 @@ export default function LeftPanel() {
   const { selectedUserId, setSelectedUserId } = useUserPanelContext();
   useGetUser(selectedUserId);
 
-  const handleUserClick = (userId: string) => () => setSelectedUserId(userId);
-
   let content;
   if (isFetching) content = <CenteredText text="Loading users..." />;
 
   if (users.length > 0) {
+    const handleUserClick = (userId: string) => () => setSelectedUserId(userId);
+
     content = users?.map((user: User) => {
-      const cardBg =
-        selectedUserId === user.id ? "bg-user-selected-bg" : "bg-transparent";
       return (
-        <div
-          className={`hover:bg-user-hover-bg ${cardBg}`}
-          key={user.id}
-          onClick={handleUserClick(user.id!)}>
+        <div key={user.id} onClick={handleUserClick(user.id!)}>
           <UserCard user={user} />
         </div>
       );
@@ -43,7 +38,7 @@ export default function LeftPanel() {
     );
 
   return (
-    <div className="bg-white h-[60%] sm:h-screen w-1/3 sm:w-4/12 p-3 sm:p-1 overflow-y-auto">
+    <div className="bg-white h-[60%] sm:h-screen w-1/3 sm:w-4/12 overflow-y-auto">
       {content}
     </div>
   );
