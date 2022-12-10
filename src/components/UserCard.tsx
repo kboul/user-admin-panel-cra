@@ -7,7 +7,7 @@ interface UserCardProps {
 
 export default function UserCard({ user }: UserCardProps) {
   return (
-    <div className="flex items-center space-x-4 m-2 mb-5">
+    <div className="flex items-center space-x-4 m-2 mb-5 cursor-pointer">
       <div className="flex-shrink-0">
         <img
           className="w-16 h-16 rounded-full"
@@ -19,7 +19,9 @@ export default function UserCard({ user }: UserCardProps) {
         <p className="text-md font-medium text-gray-900 truncate">
           {user.name}
         </p>
-        <p className="text-md text-grey truncate">{user.email}</p>
+        {user.email && (
+          <p className="text-md text-grey truncate">{user.email}</p>
+        )}
       </div>
     </div>
   );
