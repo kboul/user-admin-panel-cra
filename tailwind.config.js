@@ -11,10 +11,11 @@ module.exports = {
     extend: {
       colors: {
         "input-border-color": "var(--input-border-color)",
+        "user-hover-bg": "var(--user-hover-bg)",
         "label-color": "var(--label-color)",
         "cancel-btn-bg-hover": "var(--cancel-btn-bg-hover)",
         "cancel-btn-bg": "var(--cancel-btn-bg)",
-        "user-selected-bg": "var(--user-selected-bg",
+        "user-selected-bg": "var(--user-selected-bg)",
         grey: "var(--grey)",
         "save-btn-bg": "var(--save-btn-bg)",
         "save-btn-bg-hover": "var(--save-btn-bg-hover)"
