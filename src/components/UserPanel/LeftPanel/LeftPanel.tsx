@@ -1,11 +1,12 @@
 import { useQuery } from "@tanstack/react-query";
 
+import CenteredText from "../../CenteredText";
 import UserCard from "./UserCard";
 import { getUsers } from "../../../api";
 import { useGetUser } from "../../../hooks";
 import { User } from "../../../models";
 import { useUserPanelContext } from "../userPanelContext";
-import { centeredItemClassName } from "./styles";
+import { centeredItemClassName } from "../../../styles";
 
 export default function LeftPanel() {
   const {
@@ -20,8 +21,7 @@ export default function LeftPanel() {
   const handleUserClick = (userId: string) => () => setSelectedUserId(userId);
 
   let content;
-  if (isFetching)
-    content = <p className={centeredItemClassName}>Loading users...</p>;
+  if (isFetching) content = <CenteredText text="Loading users..." />;
 
   if (users.length > 0) {
     content = users?.map((user: User) => {
