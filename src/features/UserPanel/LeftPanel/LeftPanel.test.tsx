@@ -1,13 +1,13 @@
 import { rest } from "msw";
-import { baseUrl } from "../../api/baseUrl";
-import { users } from "../../tests/mockData";
+
+import { baseUrl } from "../../../api";
+import { users } from "../../../tests/mockData";
 import {
   renderWithQueryClient,
   screen,
   waitFor
-} from "../../tests/renderWithQueryClient";
-import server from "../../tests/server";
-
+} from "../../../tests/renderWithQueryClient";
+import server from "../../../tests/server";
 import LeftPanel from "./LeftPanel";
 
 test("loading message appears on the screen when components mounts", () => {
