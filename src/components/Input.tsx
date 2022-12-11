@@ -10,7 +10,7 @@ export default function Input({ label, ...otherProps }: InputProps) {
         {label}
       </label>
       <input
-        className="text-sm placeholder-label-color pl-3 pr-4 rounded-l border border-input-border-color py-2 focus:outline-none mb-5"
+        className="text-sm placeholder-label-color pl-3 pr-4 rounded-l border border-input-border-color py-2 focus:outline-save-btn-disabled-bg mb-5"
         placeholder={`Enter ${label.toLowerCase()}`}
         {...otherProps}
       />
