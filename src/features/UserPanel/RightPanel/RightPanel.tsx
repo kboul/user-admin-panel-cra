@@ -1,9 +1,12 @@
 import { ChangeEvent, useEffect, useId, useMemo, useState } from "react";
+import { useMutation } from "@tanstack/react-query";
 
 import { Button, CenteredText, Input } from "../../../components";
 import { useGetUser } from "../../../hooks";
 import { useUserPanelContext } from "../userPanelContext";
 import { User } from "../../../models";
+import { updateUser } from "../../../api";
+import { queryClient } from "../../../queryClient";
 import { labels } from "./constants";
 
 type ClickEvent = React.MouseEvent<HTMLElement>;
@@ -25,11 +28,19 @@ export default function RightPanel() {
     );
   }, [user, userData]);
 
+  const updateUserMutation = useMutation(updateUser, {
+    onSuccess: () => queryClient.setQueryData(["user", userData.id], userData)
+  });
+
   let content;
   if (!selectedUserId) content = <CenteredText text="Select a user to edit" />;
   if (isFetching) content = <CenteredText text="Loading user..." />;
   if (selectedUserId && user) {
-    const handleSaveClick = (e: ClickEvent) => e.preventDefault();
+    const handleSaveClick = (e: ClickEvent) => {
+      e.preventDefault();
+      const { id, ...userWithoutId } = userData;
+      updateUserMutation.mutate({ userId: id as string, user: userWithoutId });
+    };
 
     const handleCancelClick = (e: ClickEvent) => {
       e.preventDefault();
@@ -45,7 +56,7 @@ export default function RightPanel() {
       <form className="flex flex-col m-8 mt-10 sm:m-5">
         {labels.map(({ label, key }) => (
           <Input
-            key={`${label}-${id}`}
+            key={`${key}-${id}`}
             label={label}
             name={key}
             onChange={handleChange}

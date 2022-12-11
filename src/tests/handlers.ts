@@ -10,5 +10,8 @@ export const handlers = [
   ),
   rest.get(`${baseUrl}/5c093af1aeca1bb00607fb2a`, (_, res, ctx) =>
     res(ctx.json(secondUser))
+  ),
+  rest.put(`${baseUrl}/5c093af1c6ee9117a581c7d6`, (_, res, ctx) =>
+    res(ctx.json({ id: "5c093af1c6ee9117a581c7d6" }))
   )
 ];
