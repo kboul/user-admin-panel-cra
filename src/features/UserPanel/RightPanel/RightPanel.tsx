@@ -1,4 +1,4 @@
-import { useId } from "react";
+import { ChangeEvent, useEffect, useId, useMemo, useState } from "react";
 
 import { Button, CenteredText, Input } from "../../../components";
 import { useGetUser } from "../../../hooks";
@@ -13,13 +13,33 @@ export default function RightPanel() {
   const { selectedUserId } = useUserPanelContext();
   const { data: user, isFetching } = useGetUser(selectedUserId);
 
+  const [userData, setUserData] = useState({} as User);
+  useEffect(() => {
+    if (user && Object.keys(user).length > 0) setUserData(user);
+  }, [user]);
+
+  const userDataNotChanged = useMemo(() => {
+    if (!user || !userData) return true;
+    return Object.keys(user).every(
+      (key) => user[key as keyof User] === userData[key as keyof User]
+    );
+  }, [user, userData]);
+
   let content;
   if (!selectedUserId) content = <CenteredText text="Select a user to edit" />;
   if (isFetching) content = <CenteredText text="Loading user..." />;
   if (selectedUserId && user) {
     const handleSaveClick = (e: ClickEvent) => e.preventDefault();
 
-    const handleCancelClick = (e: ClickEvent) => e.preventDefault();
+    const handleCancelClick = (e: ClickEvent) => {
+      e.preventDefault();
+      setUserData(user);
+    };
+
+    const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
+      const { name, value } = e.target;
+      setUserData((prevState) => ({ ...prevState, [name]: value }));
+    };
 
     content = (
       <form className="flex flex-col m-8 mt-10 sm:m-5">
@@ -27,13 +47,14 @@ export default function RightPanel() {
           <Input
             key={`${label}-${id}`}
             label={label}
-            onChange={() => {}}
-            value={user[key as keyof User]}
+            name={key}
+            onChange={handleChange}
+            value={userData[key as keyof User] ?? ""}
           />
         ))}
 
         <div className="flex justify-end">
-          {false && (
+          {!userDataNotChanged && (
             <Button
               className="bg-cancel-btn-bg hover:bg-cancel-btn-bg-hover text-black mr-2"
               onClick={handleCancelClick}>
@@ -42,7 +63,7 @@ export default function RightPanel() {
           )}
           <Button
             className="bg-save-btn-bg hover:bg-save-btn-bg-hover text-white"
-            disabled
+            disabled={userDataNotChanged}
             onClick={handleSaveClick}>
             Save
           </Button>
