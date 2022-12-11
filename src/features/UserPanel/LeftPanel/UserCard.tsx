@@ -29,7 +29,7 @@ export default function UserCard({ user }: UserCardProps) {
           {user.name}
         </p>
         {user.email && (
-          <p className="text-sm text-grey truncate">{user.email}</p>
+          <p className="text-sm text-label-color truncate">{user.email}</p>
         )}
       </div>
     </div>

@@ -47,7 +47,9 @@
       "!src/index.tsx",
       "!src/tests/**/*.{ts,tsx}",
       "!src/reportWebVitals.ts",
-      "!src/react-app-env.d.ts"
+      "!src/react-app-env.d.ts",
+      "!src/App.tsx",
+      "!src/queryClient.ts"
     ]
   },
   "devDependencies": {

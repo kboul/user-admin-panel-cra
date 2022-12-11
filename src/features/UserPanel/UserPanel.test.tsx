@@ -2,6 +2,7 @@ import userEvent from "@testing-library/user-event";
 import { User } from "../../models";
 import { firstUser, secondUser } from "../../tests/mockData";
 import {
+  fireEvent,
   renderWithQueryClient,
   screen
 } from "../../tests/renderWithQueryClient";
@@ -18,10 +19,9 @@ test("select user message should appear on the right panel", () => {
 test("when clicking on the left panel's user card item the right panel should be populated with 5 inputs with relevat user info", async () => {
   const userCardsEl = await screen.findAllByRole("img");
 
-  await userEvent.click(
-    // eslint-disable-next-line testing-library/no-node-access
-    userCardsEl[0].parentElement?.parentElement as HTMLElement
-  );
+  await userEvent.click(userCardsEl[0]);
+
+  expect(screen.getByText("Loading user...")).toBeInTheDocument();
 
   expect(await screen.findAllByRole("textbox")).toHaveLength(5);
   labels.forEach(async ({ label, key }) => {
@@ -30,10 +30,7 @@ test("when clicking on the left panel's user card item the right panel should be
     );
   });
 
-  await userEvent.click(
-    // eslint-disable-next-line testing-library/no-node-access
-    userCardsEl[1].parentElement?.parentElement as HTMLElement
-  );
+  await userEvent.click(userCardsEl[1]);
   expect(await screen.findAllByRole("textbox")).toHaveLength(5);
   labels.forEach(async ({ label, key }) => {
     expect(await screen.findByPlaceholderText(`Enter ${label}`)).toHaveValue(
@@ -45,15 +42,66 @@ test("when clicking on the left panel's user card item the right panel should be
 test("when clicking on the left panel's user card item the right panel should have 2 buttons save & cancel", async () => {
   const userCardsEl = await screen.findAllByRole("img");
 
-  await userEvent.click(
-    // eslint-disable-next-line testing-library/no-node-access
-    userCardsEl[0].parentElement?.parentElement as HTMLElement
+  await userEvent.click(userCardsEl[0]);
+
+  expect(await screen.findByRole("button", { name: "Save" })).toBeDisabled();
+  expect(
+    screen.queryByRole("button", { name: "Cancel" })
+  ).not.toBeInTheDocument();
+});
+
+test("editing a user and clicking on cancel btn reverts the user input state, hides cancel btn & makes save btn disabled", async () => {
+  const userCardsEl = await screen.findAllByRole("img");
+
+  await userEvent.click(userCardsEl[0]);
+
+  const firstUserNameEl = await screen.findByPlaceholderText("Enter name");
+  const firstUserEmailEl = await screen.findByPlaceholderText(
+    "Enter email address"
   );
 
-  expect(
-    await screen.findByRole("button", { name: "Save" })
-  ).toBeInTheDocument();
-  expect(
-    await screen.findByRole("button", { name: "Cancel" })
-  ).toBeInTheDocument();
+  fireEvent.change(firstUserNameEl, { target: { value: "Bates" } });
+  fireEvent.change(firstUserEmailEl, {
+    target: { value: "bates.washington@gmail.com" }
+  });
+
+  const cancelBtn = await screen.findByRole("button", { name: "Cancel" });
+  expect(cancelBtn).toBeInTheDocument();
+
+  await userEvent.click(cancelBtn);
+
+  expect(firstUserNameEl).toHaveValue(firstUser.name);
+  expect(firstUserEmailEl).toHaveValue(firstUser.email);
+
+  expect(await screen.findByRole("button", { name: "Save" })).toBeDisabled();
+});
+
+test("editing a user and clicking on save btn saves the new input, hides cancel btn & makes save btn disabled", async () => {
+  const userCardsEl = await screen.findAllByRole("img");
+
+  await userEvent.click(userCardsEl[0]);
+
+  const firstUserNameEl = await screen.findByPlaceholderText("Enter name");
+  const firstUserEmailEl = await screen.findByPlaceholderText(
+    "Enter email address"
+  );
+
+  const newNameValue = "Kostas Boul";
+  const newEmailValue = "kostas@gmail.com";
+  fireEvent.change(firstUserNameEl, { target: { value: newNameValue } });
+  fireEvent.change(firstUserEmailEl, {
+    target: { value: newEmailValue }
+  });
+
+  const saveBtn = await screen.findByRole("button", { name: "Save" });
+  expect(saveBtn).not.toBeDisabled();
+
+  expect(firstUserNameEl).toHaveValue(newNameValue);
+  expect(firstUserEmailEl).toHaveValue(newEmailValue);
+  await userEvent.click(saveBtn);
+
+  // expect(screen.getByRole("button", { name: "Save" })).toBeDisabled();
+  // expect(
+  //   screen.queryByRole("button", { name: "Cancel" })
+  // ).not.toBeInTheDocument();
 });

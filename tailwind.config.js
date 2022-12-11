@@ -16,8 +16,8 @@ module.exports = {
         "cancel-btn-bg-hover": "var(--cancel-btn-bg-hover)",
         "cancel-btn-bg": "var(--cancel-btn-bg)",
         "user-selected-bg": "var(--user-selected-bg)",
-        grey: "var(--grey)",
         "save-btn-bg": "var(--save-btn-bg)",
+        "save-btn-disabled-bg": "var(--save-btn-disabled-bg)",
         "save-btn-bg-hover": "var(--save-btn-bg-hover)"
       }
     }
