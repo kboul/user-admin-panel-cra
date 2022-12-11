@@ -21,6 +21,8 @@ test("when clicking on the left panel's user card item the right panel should be
 
   await userEvent.click(userCardsEl[0]);
 
+  expect(screen.getByText("Loading user...")).toBeInTheDocument();
+
   expect(await screen.findAllByRole("textbox")).toHaveLength(5);
   labels.forEach(async ({ label, key }) => {
     expect(await screen.findByPlaceholderText(`Enter ${label}`)).toHaveValue(

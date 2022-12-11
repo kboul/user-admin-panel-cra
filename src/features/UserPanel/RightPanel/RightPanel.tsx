@@ -22,7 +22,7 @@ export default function RightPanel() {
   }, [user]);
 
   const userDataNotChanged = useMemo(() => {
-    if (!user || !userData) return true;
+    if (!user) return true;
     return Object.keys(user).every(
       (key) => user[key as keyof User] === userData[key as keyof User]
     );
