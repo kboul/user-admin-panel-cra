@@ -33,13 +33,16 @@ export default function RightPanel() {
         ))}
 
         <div className="flex justify-end">
-          <Button
-            className="bg-cancel-btn-bg hover:bg-cancel-btn-bg-hover text-black mr-2"
-            onClick={handleCancelClick}>
-            Cancel
-          </Button>
+          {false && (
+            <Button
+              className="bg-cancel-btn-bg hover:bg-cancel-btn-bg-hover text-black mr-2"
+              onClick={handleCancelClick}>
+              Cancel
+            </Button>
+          )}
           <Button
             className="bg-save-btn-bg hover:bg-save-btn-bg-hover text-white"
+            disabled
             onClick={handleSaveClick}>
             Save
           </Button>

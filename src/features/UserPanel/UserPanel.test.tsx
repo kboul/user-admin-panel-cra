@@ -50,10 +50,8 @@ test("when clicking on the left panel's user card item the right panel should ha
     userCardsEl[0].parentElement?.parentElement as HTMLElement
   );
 
+  expect(await screen.findByRole("button", { name: "Save" })).toBeDisabled();
   expect(
-    await screen.findByRole("button", { name: "Save" })
-  ).toBeInTheDocument();
-  expect(
-    await screen.findByRole("button", { name: "Cancel" })
-  ).toBeInTheDocument();
+    screen.queryByRole("button", { name: "Cancel" })
+  ).not.toBeInTheDocument();
 });
