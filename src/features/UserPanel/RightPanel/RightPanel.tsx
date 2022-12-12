@@ -22,7 +22,7 @@ export default function RightPanel() {
   }, [user]);
 
   const userDataNotChanged = useMemo(() => {
-    if (!user) return true;
+    if (!user || Object.keys(userData).length === 0) return true;
     return Object.keys(user).every(
       (key) => user[key as keyof User] === userData[key as keyof User]
     );
@@ -52,6 +52,8 @@ export default function RightPanel() {
       setUserData((prevState) => ({ ...prevState, [name]: value }));
     };
 
+    const showCancelBtn = user.id === userData.id && !userDataNotChanged;
+
     content = (
       <form className="flex flex-col m-8 mt-10 sm:m-5">
         {labels.map(({ label, key }) => (
@@ -65,7 +67,7 @@ export default function RightPanel() {
         ))}
 
         <div className="flex justify-end">
-          {!userDataNotChanged && (
+          {showCancelBtn && (
             <Button
               className="bg-cancel-btn-bg hover:bg-cancel-btn-bg-hover text-black mr-2"
               onClick={handleCancelClick}>

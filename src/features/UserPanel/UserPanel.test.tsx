@@ -100,6 +100,7 @@ test("editing a user and clicking on save btn saves the new input, hides cancel 
   expect(firstUserEmailEl).toHaveValue(newEmailValue);
   await userEvent.click(saveBtn);
 
+  // FIXME: these 2 should work but for some strange reason they don't
   // expect(screen.getByRole("button", { name: "Save" })).toBeDisabled();
   // expect(
   //   screen.queryByRole("button", { name: "Cancel" })
