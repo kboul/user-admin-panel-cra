@@ -1,4 +1,11 @@
-import { ChangeEvent, useEffect, useId, useMemo, useState } from "react";
+import {
+  ChangeEvent,
+  useCallback,
+  useEffect,
+  useId,
+  useMemo,
+  useState
+} from "react";
 import { useMutation } from "@tanstack/react-query";
 
 import { Button, CenteredText, Input } from "../../../components";
@@ -28,30 +35,36 @@ export default function RightPanel() {
     );
   }, [user, userData]);
 
-  const updateUserMutation = useMutation(updateUser, {
+  const { mutate } = useMutation(updateUser, {
     onSuccess: () => queryClient.setQueryData(["user", userData.id], userData)
   });
+
+  const handleSaveClick = useCallback(
+    (e: ClickEvent) => {
+      e.preventDefault();
+      const { id, ...userWithoutId } = userData;
+      mutate({ userId: id as string, user: userWithoutId });
+    },
+    [userData, mutate]
+  );
+
+  const handleCancelClick = useCallback(
+    (e: ClickEvent) => {
+      e.preventDefault();
+      if (user) setUserData(user);
+    },
+    [user]
+  );
+
+  const handleChange = useCallback((e: ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+    setUserData((prevState) => ({ ...prevState, [name]: value }));
+  }, []);
 
   let content;
   if (!selectedUserId) content = <CenteredText text="Select a user to edit" />;
   if (isFetching) content = <CenteredText text="Loading user..." />;
   if (selectedUserId && user) {
-    const handleSaveClick = (e: ClickEvent) => {
-      e.preventDefault();
-      const { id, ...userWithoutId } = userData;
-      updateUserMutation.mutate({ userId: id as string, user: userWithoutId });
-    };
-
-    const handleCancelClick = (e: ClickEvent) => {
-      e.preventDefault();
-      setUserData(user);
-    };
-
-    const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
-      const { name, value } = e.target;
-      setUserData((prevState) => ({ ...prevState, [name]: value }));
-    };
-
     const showCancelBtn = user.id === userData.id && !userDataNotChanged;
 
     content = (

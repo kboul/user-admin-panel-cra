@@ -1,9 +1,11 @@
+import { memo } from "react";
+
 interface InputProps {
   label: string;
   [key: string]: any;
 }
 
-export default function Input({ label, ...otherProps }: InputProps) {
+export default memo(function Input({ label, ...otherProps }: InputProps) {
   return (
     <>
       <label className="mb-1 text-sm tracking-wide text-label-color">
@@ -16,4 +18,4 @@ export default function Input({ label, ...otherProps }: InputProps) {
       />
     </>
   );
-}
+});

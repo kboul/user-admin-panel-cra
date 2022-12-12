@@ -1,10 +1,12 @@
+import { memo } from "react";
+
 interface ButtonProps {
   children: React.ReactNode;
   className: string;
   [key: string]: any;
 }
 
-export default function Button({
+export default memo(function Button({
   children,
   className,
   ...otherProps
@@ -17,4 +19,4 @@ export default function Button({
       {children}
     </button>
   );
-}
+});
