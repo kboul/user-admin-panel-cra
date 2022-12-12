@@ -3,7 +3,6 @@ import { useQuery } from "@tanstack/react-query";
 import { CenteredText } from "../../../components";
 import UserCard from "./UserCard";
 import { getUsers } from "../../../api";
-import { useGetUser } from "../../../hooks";
 import { User } from "../../../models";
 import { useUserPanelContext } from "../userPanelContext";
 
@@ -14,8 +13,7 @@ export default function LeftPanel() {
     data: users
   } = useQuery({ initialData: [], queryKey: ["users"], queryFn: getUsers });
 
-  const { selectedUserId, setSelectedUserId } = useUserPanelContext();
-  useGetUser(selectedUserId);
+  const { setSelectedUserId } = useUserPanelContext();
 
   let content;
   if (isFetching) content = <CenteredText text="Loading users..." />;
