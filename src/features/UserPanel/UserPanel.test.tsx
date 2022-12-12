@@ -4,7 +4,8 @@ import { firstUser, secondUser } from "../../tests/mockData";
 import {
   fireEvent,
   renderWithQueryClient,
-  screen
+  screen,
+  waitFor
 } from "../../tests/renderWithQueryClient";
 import { labels } from "./RightPanel/constants";
 import UserPanel from "./UserPanel";
@@ -76,7 +77,9 @@ test("editing a user and clicking on cancel btn reverts the user input state, hi
   expect(await screen.findByRole("button", { name: "Save" })).toBeDisabled();
 });
 
-test("editing a user and clicking on save btn saves the new input, hides cancel btn & makes save btn disabled", async () => {
+test(`editing a user and clicking on save btn saves the new input,
+     toggling cards and coming back should maintain the altered input, 
+     btn state should be the initial`, async () => {
   const userCardsEl = await screen.findAllByRole("img");
 
   await userEvent.click(userCardsEl[0]);
@@ -100,9 +103,14 @@ test("editing a user and clicking on save btn saves the new input, hides cancel 
   expect(firstUserEmailEl).toHaveValue(newEmailValue);
   await userEvent.click(saveBtn);
 
-  // FIXME: these 2 should work but for some strange reason they don't
-  // expect(screen.getByRole("button", { name: "Save" })).toBeDisabled();
-  // expect(
-  //   screen.queryByRole("button", { name: "Cancel" })
-  // ).not.toBeInTheDocument();
+  await userEvent.click(userCardsEl[1]);
+  await userEvent.click(userCardsEl[0]);
+
+  // eslint-disable-next-line testing-library/await-async-utils
+  waitFor(() => expect(firstUserNameEl).toHaveValue(newNameValue));
+
+  expect(screen.getByRole("button", { name: "Save" })).toBeDisabled();
+  expect(
+    screen.queryByRole("button", { name: "Cancel" })
+  ).not.toBeInTheDocument();
 });
