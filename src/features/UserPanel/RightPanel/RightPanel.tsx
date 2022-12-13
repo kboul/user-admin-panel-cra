@@ -99,7 +99,7 @@ export default function RightPanel() {
   }
 
   return (
-    <div className="bg-white h-[60%] sm:h-screen w-1/3 sm:w-9/12">
+    <div className="bg-white h-[60%] sm:h-screen w-1/3 sm:w-9/12 overflow-y-auto">
       {content}
     </div>
   );

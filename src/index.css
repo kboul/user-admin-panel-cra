@@ -11,6 +11,7 @@ body {
   --user-hover-bg: #e8e8e8;
   --input-border-color: #ececec;
   --label-color: grey;
+  --email-selected-text: #679acc;
   --cancel-btn-bg: #f7f7f7;
   --cancel-btn-bg-hover: #dedede;
   --save-btn-bg: #1b68b3;

@@ -13,6 +13,7 @@ module.exports = {
         "input-border-color": "var(--input-border-color)",
         "user-hover-bg": "var(--user-hover-bg)",
         "label-color": "var(--label-color)",
+        "email-selected-text": "var(--email-selected-text)",
         "cancel-btn-bg-hover": "var(--cancel-btn-bg-hover)",
         "cancel-btn-bg": "var(--cancel-btn-bg)",
         "user-selected-bg": "var(--user-selected-bg)",

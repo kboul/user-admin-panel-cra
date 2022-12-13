@@ -9,10 +9,12 @@ interface UserCardProps {
 export default function UserCard({ user }: UserCardProps) {
   const { selectedUserId } = useUserPanelContext();
 
-  const nameTextColor =
-    selectedUserId === user.id ? "text-white" : "text-gray-900";
-  const cardBg =
-    selectedUserId === user.id ? "bg-user-selected-bg" : "bg-transparent";
+  const isSelectedUser = selectedUserId === user.id;
+  const nameTextColor = isSelectedUser ? "text-white" : "text-gray-900";
+  const cardBg = isSelectedUser ? "bg-user-selected-bg" : "bg-transparent";
+  const emailTextColor = isSelectedUser
+    ? "text-email-selected-text"
+    : "text-label-color";
 
   return (
     <div
@@ -29,7 +31,7 @@ export default function UserCard({ user }: UserCardProps) {
           {user.name}
         </p>
         {user.email && (
-          <p className="text-sm text-label-color truncate">{user.email}</p>
+          <p className={`text-sm ${emailTextColor} truncate`}>{user.email}</p>
         )}
       </div>
     </div>
