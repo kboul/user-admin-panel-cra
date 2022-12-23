@@ -1,2 +1,1 @@
-export const baseUrl =
-  "https://my-json-server.typicode.com/tsevdos/epignosis-users/users";
+export const baseUrl = "http://localhost:3500/users";
