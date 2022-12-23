@@ -1,15 +1,29 @@
-import { createContext, ReactNode, useContext, useMemo, useState } from "react";
+import {
+  createContext,
+  ReactNode,
+  useContext,
+  useMemo,
+  useState,
+  Dispatch,
+  SetStateAction
+} from "react";
 
 interface Value {
   selectedUserId: string;
-  setSelectedUserId: React.Dispatch<React.SetStateAction<string>>;
+  setSelectedUserId: Dispatch<SetStateAction<string>>;
 }
 
 const UserPanelContext = createContext({} as Value);
 
 export const useUserPanelContext = () => useContext(UserPanelContext!);
 
-const UserPanelContextProvider = ({ children }: { children: ReactNode }) => {
+interface UserPanelContextProviderProps {
+  children: ReactNode;
+}
+
+const UserPanelContextProvider = ({
+  children
+}: UserPanelContextProviderProps) => {
   const [selectedUserId, setSelectedUserId] = useState("");
 
   const value = useMemo(

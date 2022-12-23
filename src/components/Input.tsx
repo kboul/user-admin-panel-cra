@@ -1,8 +1,7 @@
-import { memo } from "react";
+import { memo, InputHTMLAttributes } from "react";
 
-interface InputProps {
+interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
   label: string;
-  [key: string]: any;
 }
 
 export default memo(function Input({ label, ...otherProps }: InputProps) {

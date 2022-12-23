@@ -4,7 +4,8 @@ import {
   useEffect,
   useId,
   useMemo,
-  useState
+  useState,
+  MouseEvent
 } from "react";
 import { useMutation } from "@tanstack/react-query";
 
@@ -16,7 +17,7 @@ import { updateUser } from "../../../api";
 import { queryClient } from "../../../queryClient";
 import { labels } from "./constants";
 
-type ClickEvent = React.MouseEvent<HTMLElement>;
+type ClickEvent = MouseEvent<HTMLElement>;
 
 export default function RightPanel() {
   const id = useId();

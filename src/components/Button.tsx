@@ -1,9 +1,8 @@
-import { memo } from "react";
+import { memo, ReactNode, ButtonHTMLAttributes } from "react";
 
-interface ButtonProps {
-  children: React.ReactNode;
+interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
+  children: ReactNode;
   className: string;
-  [key: string]: any;
 }
 
 export default memo(function Button({
